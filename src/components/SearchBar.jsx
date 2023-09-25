@@ -1,13 +1,65 @@
 import { useState } from "react";
 import styles from './SearchBar.module.css'
 
-const SearchBar = () => {
+const CLIENT_ID = "76c2e93ccff64a5bb352a61a14093518"
+const REDIRECT_URI = "http://localhost:3000"
+const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
+const RESPONSE_TYPE = "token"
+
+const SearchBar = ({ token, updateTracklist }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const token = { "value": "BQAegj53JsF0Po8PSuDBrSo7FwQ9ViK624oATx6jWzdbon5eYGisqiQK1G2V46x2nWVW2I-MCnK1aoXysNFAGuWCIRWR5Hjldtw2iiSJEIhiaMYusxawUBGnxOhHSMaKTr9_JbKblBx_m5PpmaKJ245YR-Iz3kCmkC6Ixx2YVIkmgMy0bT7dh7mpFwnMdY2jkwM" };
 
     const submitHandler = (e) => {
         e.preventDefault();
+
+        console.log("Bearer Token:", token.value);
+    
+
+    const apiData = fetch(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        params: {
+            q: searchTerm,
+            type: "artist"
+        }})
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the response as JSON
+        })
+        .then(data => {
+            // Now you can work with the JSON data
+            // console.log(data);
+    
+            // Example: Accessing tracks
+            const tracks = data.tracks.items;
+            console.log('Tracks:', tracks);
+
+            tracks.map(t => console.log(t.id))
+            tracks.map(t => console.log(t.name))
+            tracks.map(t => console.log(t.artist))
+
+            updateTracklist(data.tracks);
+    
+            // Example: Accessing the first track name
+            // if (tracks.length > 0) {
+            //     const firstTrackName = tracks[0].name;
+            //     console.log('First Track Name:', firstTrackName);
+            // }
+    
+            // Return the data if needed
+            return data;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
+
+    
+    
 
   return (
       <div className={styles.searchBar}>

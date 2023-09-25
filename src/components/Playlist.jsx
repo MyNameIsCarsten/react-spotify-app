@@ -8,7 +8,8 @@ const REDIRECT_URI = "http://localhost:3000/"
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "token"
 
-const Playlist = ({ data, playlist, removeFromPlaylist, setPlaylistName, playlistName }) => {
+const Playlist = ({ playlist, removeFromPlaylist, setPlaylistName, playlistName }) => {
+
 
     const clickHandler = () => {
       playlist.map((song) => console.log(song.uri))
