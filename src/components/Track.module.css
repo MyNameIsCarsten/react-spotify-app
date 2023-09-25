@@ -1,0 +1,20 @@
+.track {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.26);
+    margin: 10px 5%;
+
+}
+
+.track button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.trackinfo {
+    padding-bottom: 10px;
+    text-align: left;
+}
