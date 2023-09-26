@@ -1,10 +1,9 @@
 
 import './App.css';
-import SearchBar from './components/SearchBar';
-import Playlist from './components/Playlist';
-import Tracklist from './components/Tracklist';
+import SearchBar from './components/searchbar/SearchBar';
+import Playlist from './components/playlist/Playlist';
+import Tracklist from './components/tracklist/Tracklist';
 import { useState, useEffect } from 'react';
-import background from './assets/background.jpg'
 
 
 function App() {
@@ -50,81 +49,88 @@ function App() {
   };
 
   // function to get user data
-  const currentUser = () => {
-    return fetch('https://api.spotify.com/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(response => {
+  const currentUser = async () => {
+    try {
+      const response = await fetch('https://api.spotify.com/v1/me', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json();
-    })
-    .then(userData => {
-      return userData; // this can be checked for the scope
-    });
+  
+      const userData = await response.json();
+      return userData; // this can be used to access the scope
+    } catch (error) {
+      throw error; 
+    }
   }
+  
 
   
   // Function to create a playlist (assuming you have the user's ID)
-  const createPlaylist = (userId, playlistName, token) => {
-    let playlistId; // initialize variable to store playlist id
-
-    return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: playlistName,
-        description: "New playlist created by app",
-        public: false
-      })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error in createPlaylist. Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(jsonResponse => {
-      playlistId = jsonResponse.id; // Store the playlistId
-      let uriArray = playlist.map(track => track.uri); // create uriArray based on tracks in playlist
-      
-      // Add tracks to the newly created playlist
-      return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+  const createPlaylist = async (userId, playlistName, token) => {
+    try {
+      let playlistId; // initialize variable to store playlist id
+  
+      // Create the playlist
+      const createResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
-        }, 
+        },
         body: JSON.stringify({
-          uris: uriArray, //array of uris created above
-          position: 0, 
+          name: playlistName,
+          description: "New playlist created by app",
+          public: false
         })
       });
-    })
-    .then(response => {
-      if (!response.ok) {
+  
+      if (!createResponse.ok) {
+        throw new Error('Error in createPlaylist. Network response was not ok');
+      }
+  
+      const createJsonResponse = await createResponse.json();
+      playlistId = createJsonResponse.id; // Store the playlistId
+  
+      let uriArray = playlist.map(track => track.uri); // create uriArray based on tracks in playlist
+  
+      // Add tracks to the newly created playlist
+      const addTracksResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          uris: uriArray, // array of uris created above
+          position: 0,
+        })
+      });
+  
+      if (!addTracksResponse.ok) {
         throw new Error('Error in adding tracks to the playlist. Network response was not ok');
       }
-
-      setPlaylist([]); // reset playlist after successfull playlist creation
-      setPlaylistName(''); // reset playlistName after successfull playlist creation
-
-      alert(`Your playlist ${playlistName} was successfully created!`); // notify user of successfull playlist creation
-      return response.json();
-    });
+  
+      setPlaylist([]); // reset playlist after successful playlist creation
+      setPlaylistName(''); // reset playlistName after successful playlist creation
+  
+      alert(`Your playlist ${playlistName} was successfully created!`); // notify the user of successful playlist creation
+  
+      return addTracksResponse.json();
+    } catch (error) {
+      throw error; // Handle or rethrow the error as needed
+    }
   }
 
   return (
-    <div className="App" style={{backgroundImage: `url(${background})`, minHeight: '100vh'}}>
+    <div className="App" style={{minHeight: '100vh'}}>
       <div className="title">
-              <h1>Ja<span>mmm</span>ing</h1>
+              <h1>Spot<span>API</span>fy</h1>
         </div>
       <SearchBar token={token} updateTracklist={updateTracklist}/>
       <div className='flex'>

@@ -1,4 +1,4 @@
-# potify Music Web Application
+# Spotify Music Web Application
 
 ## Overview
 
@@ -26,6 +26,7 @@ Here are some of the key features and achievements of this project:
 
 3. **User Authentication:** To provide a secure user experience, I've implemented user authentication, allowing users to log in to their Spotify accounts and interact with their music library.
 
+
 ## Technologies Used
 
 - React.js: I've utilized the React library to build the frontend of my web application, creating a dynamic and responsive user interface.
@@ -49,7 +50,7 @@ This required understanding how to make authenticated HTTP requests to external 
 Implementing user authentication was a significant achievement. 
 Users can securely log in to their Spotify accounts, granting the application access to their music library while ensuring data privacy.
 
-![login view](./login-view.jpg)
+![start view](./start-view.jpg)
 
 ## Conclusion
 

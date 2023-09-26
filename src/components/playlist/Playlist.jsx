@@ -1,5 +1,5 @@
 import styles from './Playlist.module.css'
-import Track from './Track';
+import Track from '../track/Track';
 
 
 const Playlist = ({ playlist, removeFromPlaylist, setPlaylistName, playlistName, currentUser, createPlaylist, token }) => {
