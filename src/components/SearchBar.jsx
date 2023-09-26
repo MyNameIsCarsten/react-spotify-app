@@ -2,12 +2,14 @@ import { useState } from "react";
 import styles from './SearchBar.module.css'
 
 const CLIENT_ID = "76c2e93ccff64a5bb352a61a14093518"
-const REDIRECT_URI = "http://localhost:3000"
+const REDIRECT_URI = "http://localhost:3000/"
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "token"
 
 const SearchBar = ({ token, updateTracklist }) => {
     const [searchTerm, setSearchTerm] = useState('');
+
+    console.log(token);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -65,7 +67,12 @@ const SearchBar = ({ token, updateTracklist }) => {
       <div className={styles.searchBar}>
           <form onSubmit={submitHandler}>
               <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} name='searchTerm' />
-              <button type="submit">SEARCH</button>
+              
+              {token === null ? <button>
+                  <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
+              </button> : <button type="submit">SEARCH</button>}
+              
+              
           </form>
           
     </div>
