@@ -10,7 +10,7 @@ const SearchBar = ({ token, updateTracklist }) => {
     const REDIRECT_URI = "http://localhost:3000/"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const RESPONSE_TYPE = "token"
-    const SCOPE = "playlist-modify-private playlist-modify-public";
+    const SCOPE = ["playlist-modify-private", "playlist-modify-public", "user-library-modify"];
 
     // submit handler
     const submitHandler = async (e) => {
@@ -31,8 +31,8 @@ const SearchBar = ({ token, updateTracklist }) => {
         
             if (!response.ok) {
                 throw new Error("Network response was not ok");
-            }
-      
+          }
+          
             // grab data from response
             const data = await response.json();
 

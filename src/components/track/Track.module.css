@@ -3,7 +3,7 @@
     justify-content: space-between;
     border-bottom: 2px solid rgba(255, 255, 255, 0.26);
     margin: 10px 5%;
-
+    align-items: center;
 }
 
 .track button {
@@ -19,8 +19,6 @@
 .track button:hover {
     background-color: #1ed760 !important;
     box-shadow: none;
-    transform: translateX(3px);
-    transform: translateY(4px);
     border: 3px solid #1db954;
 }
 
@@ -32,3 +30,22 @@
     gap: 10px;
 }
 
+.info img {
+    object-fit: contain;
+    display: flex;
+    align-items: center;
+}
+
+.saveBtn {
+    font-size: 10px;
+    padding: 10px 10px !important;
+    margin-right: 10px;
+}
+
+.trackinfo {
+    width: 50%;
+}
+
+.btns {
+    min-width: 140px;
+}
