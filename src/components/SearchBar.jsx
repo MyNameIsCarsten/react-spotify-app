@@ -1,80 +1,67 @@
 import { useState } from "react";
 import styles from './SearchBar.module.css'
 
-const CLIENT_ID = "76c2e93ccff64a5bb352a61a14093518"
-const REDIRECT_URI = "http://localhost:3000/"
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
-const RESPONSE_TYPE = "token"
-
 const SearchBar = ({ token, updateTracklist }) => {
+    // Define states
     const [searchTerm, setSearchTerm] = useState('');
 
-    console.log(token);
+    // Define variables for authentification
+    const CLIENT_ID = `${process.env.REACT_APP_CLIENT_ID}`
+    const REDIRECT_URI = "http://localhost:3000/"
+    const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
+    const RESPONSE_TYPE = "token"
+    const SCOPE = "playlist-modify-private playlist-modify-public";
 
-    const submitHandler = (e) => {
+    // submit handler
+    const submitHandler = async (e) => {
+        // prevent reload after submission
         e.preventDefault();
 
-        console.log("Bearer Token:", token.value);
-    
-
-    const apiData = fetch(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-        params: {
-            q: searchTerm,
-            type: "artist"
-        }})
-        .then(response => {
+        // get search results from API
+        try {
+            const response = await fetch(
+                `https://api.spotify.com/v1/search?q=${searchTerm}&type=track`,
+                {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                }
+            );
+        
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error("Network response was not ok");
             }
-            return response.json(); // Parse the response as JSON
-        })
-        .then(data => {
-            // Now you can work with the JSON data
-            // console.log(data);
-    
-            // Example: Accessing tracks
+      
+            // grab data from response
+            const data = await response.json();
+
+            // grab tracks from data
             const tracks = data.tracks.items;
-            console.log('Tracks:', tracks);
 
-            tracks.map(t => console.log(t.id))
-            tracks.map(t => console.log(t.name))
-            tracks.map(t => console.log(t.artist))
+            // update tracklist with tracks from API request
+            updateTracklist(tracks);
 
-            updateTracklist(data.tracks);
-    
-            // Example: Accessing the first track name
-            // if (tracks.length > 0) {
-            //     const firstTrackName = tracks[0].name;
-            //     console.log('First Track Name:', firstTrackName);
-            // }
-    
-            // Return the data if needed
-            return data;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    
-    
+        // catch error
+        } catch (error) {
+          console.error("Error (SearchBar):", error);
+        }
+      };
+      
 
   return (
       <div className={styles.searchBar}>
-          <form onSubmit={submitHandler}>
-              <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} name='searchTerm' />
-              
-              {token === null ? <button>
-                  <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
-              </button> : <button type="submit">SEARCH</button>}
-              
-              
-          </form>
-          
+            {!token ? (
+              <button>
+                <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`}>Login to Spotify</a>
+              </button>)
+              :
+              (
+                <form onSubmit={submitHandler}>
+                    <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} name='searchTerm' />
+                    <button type="submit">SEARCH</button>
+                </form>
+            )} 
     </div>
   )
 }

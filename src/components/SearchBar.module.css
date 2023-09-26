@@ -10,6 +10,11 @@ form {
     align-items: center;
 }
 
+.searchBar a {
+    text-decoration: none;
+    color: white;
+}
+
 button {
     margin-top: 1%;
     background-color: blueviolet;
