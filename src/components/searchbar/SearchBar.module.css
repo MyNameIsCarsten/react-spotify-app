@@ -31,8 +31,6 @@ button:hover {
     cursor: pointer;
     
     box-shadow: none;
-    transform: translateX(3px);
-    transform: translateY(4px);
     border: 3px solid #1db954;
 }
 

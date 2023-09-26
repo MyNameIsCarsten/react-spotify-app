@@ -18,7 +18,9 @@ function App() {
 
   // on mount: grab token stored in local storage
   useEffect(() => {
+    // retrieves the current URL hash portion
     const hash = window.location.hash
+    // attempts to retrieve a token from the browser's local storage
     let token = window.localStorage.getItem("token")
 
     if (!token && hash) {
@@ -62,11 +64,12 @@ function App() {
       });
   
       if (!response.ok) {
+        localStorage.removeItem("token");
+        window.location.reload(); 
         throw new Error('Network response was not ok');
       }
   
       const userData = await response.json();
-      console.log(userData);
       return userData; 
 
     } catch (error) {
@@ -154,6 +157,31 @@ function App() {
     window.location.reload();   
   }
 
+  const saveTrack = async (trackId) => {
+    
+    let curToken = token;
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${curToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ids: [
+            trackId,
+          ],
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Error saving track');
+      }
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
   return (
     <div className="App" style={{minHeight: '100vh'}}>
       <div className="title">
@@ -167,7 +195,7 @@ function App() {
       <SearchBar token={token} updateTracklist={updateTracklist} />
       {token ? (
         <div className='flex'>
-          <Tracklist data={tracklist} addToPlaylist={addToPlaylist} />
+          <Tracklist data={tracklist} addToPlaylist={addToPlaylist} saveTrack={saveTrack} />
           <Playlist
             className='flexItem'
             playlist={playlist}

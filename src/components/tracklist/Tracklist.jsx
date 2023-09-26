@@ -1,14 +1,14 @@
 import Track from "../track/Track"
 import styles from './Tracklist.module.css'
 
-const Tracklist = ({ data, addToPlaylist }) => {
+const Tracklist = ({ data, addToPlaylist, saveTrack }) => {
     
   return (
     <div className={styles.tracklist} >
       <h2>Results</h2>
       {
         data !== undefined ?
-          data.map((track, index) => <Track key={track.id} data={data[index]} addToPlaylist={addToPlaylist} origin='tracklist' />)
+          data.map((track, index) => <Track key={track.id} data={data[index]} addToPlaylist={addToPlaylist} origin='tracklist' saveTrack={saveTrack} />)
           :
           <h3>No Tracks yet.</h3>
       }
