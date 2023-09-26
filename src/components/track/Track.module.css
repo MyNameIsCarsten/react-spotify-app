@@ -7,11 +7,17 @@
 }
 
 .track button {
-    background: none;
     border: none;
     color: white;
     font-weight: bold;
     cursor: pointer;
+    padding: 13px 16px !important;
+    background-color: #1db954;
+    height: fit-content;
+}
+
+.track button:hover {
+    background-color: #1ed760 !important;
 }
 
 .trackinfo {

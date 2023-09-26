@@ -1,5 +1,5 @@
 .playlist {
-    background-color: #191145bb;
+    background-color: #1ed75f;
     flex-grow: 1;
     flex-basis: 100%;
     border-radius: 10px;
@@ -16,6 +16,7 @@
     margin-top: 10px;
     color: white;
     padding: 10px;
+    font-size: 20px;
 }
 
 .playlist input:focus-visible {
@@ -23,7 +24,7 @@
 }
 
 .playlist input::placeholder {
-    color: rgba(255, 255, 255, 0.205);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .playlistinfo {
@@ -36,4 +37,6 @@
 .playlist button {
     margin-bottom: 10px;
 }
+
+
 

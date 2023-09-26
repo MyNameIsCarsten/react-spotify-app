@@ -1,5 +1,5 @@
 .searchBar {
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 form {
@@ -10,9 +10,14 @@ form {
     align-items: center;
 }
 
+.searchBar a {
+    text-decoration: none;
+    color: white;
+}
+
 button {
     margin-top: 1%;
-    background-color: blueviolet;
+    background-color: #1db954;
     border-radius: 100px;
     padding: 1% 50px;
     color: white;
@@ -20,7 +25,7 @@ button {
 }
 
 button:hover {
-    background-color: rgb(76, 23, 126);
+    background-color: #1ed760;
     cursor: pointer;
 }
 
@@ -29,4 +34,8 @@ button:hover {
     border: none;
     border-radius: 10px;
     text-align: center;
+}
+
+.searchBar input:focus-visible {
+    outline: none;
 }
