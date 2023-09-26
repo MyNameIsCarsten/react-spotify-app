@@ -14,11 +14,25 @@
 .title {
   background-color: #1ed760;
   color: white;
-  padding: 2% 0;
+  padding: 2% 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title span {
   color: #191414;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userInfo img {
+  border-radius: 100px;
 }
 
 .flex {
@@ -31,4 +45,28 @@
 .flexItem {
   flex-grow: 1;
   flex-basis: 100%;
+}
+
+.title button {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.title button:hover {
+  border: none;
+  transform: translateX(0);
+  transform: translateY(0);
+}
+
+@media only screen and (max-width: 480px) {
+  .flex {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width:481px) and (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+  }
 }

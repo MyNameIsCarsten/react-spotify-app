@@ -22,11 +22,18 @@ button {
     padding: 1% 50px;
     color: white;
     border: none;
+    
+    box-shadow: 0 4px 2px 2px #00000054;
 }
 
 button:hover {
     background-color: #1ed760;
     cursor: pointer;
+    
+    box-shadow: none;
+    transform: translateX(3px);
+    transform: translateY(4px);
+    border: 3px solid #1db954;
 }
 
 .searchBar input {
@@ -34,6 +41,8 @@ button:hover {
     border: none;
     border-radius: 10px;
     text-align: center;
+    
+    box-shadow: 0 4px 2px 2px #00000054;
 }
 
 .searchBar input:focus-visible {

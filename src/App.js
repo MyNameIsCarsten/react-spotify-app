@@ -12,6 +12,9 @@ function App() {
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
   const [token, setToken] = useState("")
+  const [user, setUser] = useState(null); // Initialize with null or an empty object
+  
+
 
   // on mount: grab token stored in local storage
   useEffect(() => {
@@ -63,14 +66,32 @@ function App() {
       }
   
       const userData = await response.json();
-      return userData; // this can be used to access the scope
+      console.log(userData);
+      return userData; 
+
     } catch (error) {
       throw error; 
     }
   }
-  
 
+  // update the user state
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const userData = await currentUser();
+          setUser(userData);
+        } catch (error) {
+          // Handle any errors if necessary
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      if (token) {
+        fetchUserData();
+      }
+    }, [token]);
   
+ 
   // Function to create a playlist (assuming you have the user's ID)
   const createPlaylist = async (userId, playlistName, token) => {
     try {
@@ -127,25 +148,41 @@ function App() {
     }
   }
 
+  // Logout function
+  const userProfileClickHandler = () => {
+    localStorage.removeItem("token");
+    window.location.reload();   
+  }
+
   return (
     <div className="App" style={{minHeight: '100vh'}}>
       <div className="title">
-              <h1>Spot<span>API</span>fy</h1>
+        <h1>Spot<span>API</span>fy</h1>
+        <div className='userInfo'>
+          
+          {user ? <button onClick={userProfileClickHandler}><img alt={user.display_name} src={user.images[0].url} /></button> : ''}
+          <button onClick={userProfileClickHandler}><b>{user ? user.display_name : ''}</b></button>
         </div>
-      <SearchBar token={token} updateTracklist={updateTracklist}/>
-      <div className='flex'>
-        <Tracklist data={tracklist} addToPlaylist={addToPlaylist}/>
-        <Playlist
-          className='flexItem'
-          playlist={playlist}
-          data={tracklist}
-          removeFromPlaylist={removeFromPlaylist}
-          setPlaylistName={setPlaylistName}
-          playlistName={playlistName}
-          currentUser={currentUser}
-          createPlaylist={createPlaylist}
-          token={token}/>
       </div>
+      <SearchBar token={token} updateTracklist={updateTracklist} />
+      {token ? (
+        <div className='flex'>
+          <Tracklist data={tracklist} addToPlaylist={addToPlaylist} />
+          <Playlist
+            className='flexItem'
+            playlist={playlist}
+            data={tracklist}
+            removeFromPlaylist={removeFromPlaylist}
+            setPlaylistName={setPlaylistName}
+            playlistName={playlistName}
+            currentUser={currentUser}
+            createPlaylist={createPlaylist}
+            token={token} />
+        </div>
+      )
+        :
+        ''
+      }
       
     </div>
   );

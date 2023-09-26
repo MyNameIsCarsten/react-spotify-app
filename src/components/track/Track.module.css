@@ -18,9 +18,17 @@
 
 .track button:hover {
     background-color: #1ed760 !important;
+    box-shadow: none;
+    transform: translateX(3px);
+    transform: translateY(4px);
+    border: 3px solid #1db954;
 }
 
-.trackinfo {
+.info {
     padding-bottom: 10px;
     text-align: left;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
+

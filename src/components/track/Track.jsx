@@ -20,9 +20,13 @@ const Track = ({ data, addToPlaylist, removeFromPlaylist, origin }) => {
 
   return (
       <div key={data.id} className={styles.track}>
-          <div className={styles.trackinfo}>
-            <h4>{data.name}</h4>
-            <p>{artists}</p>
+      <div className={styles.info}>
+        <img src={data.album.images[2].url} alt={data.name}/>
+        <div className={styles.trackinfo}>
+          <h4>{data.name}</h4>
+          <p>{artists}</p>
+        </div>
+            
           </div>
           <button onClick={clickHandler}>{origin === 'tracklist' ? '+' : '-'}</button>
           

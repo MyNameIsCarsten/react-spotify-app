@@ -5,6 +5,8 @@
     border-radius: 10px;
     color: white;
     margin: 0 5%;
+    box-shadow: 0 4px 2px 2px #00000054;
+    margin-bottom: 20px;
 }
 
 .playlist input {
@@ -25,6 +27,7 @@
 
 .playlist input::placeholder {
     color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
 }
 
 .playlistinfo {
