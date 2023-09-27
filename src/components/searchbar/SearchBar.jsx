@@ -7,7 +7,7 @@ const SearchBar = ({ token, updateTracklist }) => {
 
     // Define variables for authentification
     const CLIENT_ID = `${process.env.REACT_APP_CLIENT_ID}`
-    const REDIRECT_URI = "http://spotapify.netlify.app/"
+    const REDIRECT_URI = "http://spotapify.netlify.app"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const RESPONSE_TYPE = "token"
     const SCOPE = ["playlist-modify-private", "playlist-modify-public", "user-library-modify"];
