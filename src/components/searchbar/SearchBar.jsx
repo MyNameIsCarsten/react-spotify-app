@@ -29,8 +29,10 @@ const SearchBar = ({ token, updateTracklist }) => {
                 }
             );
         
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+          if (!response.ok) {
+            localStorage.removeItem('token');
+            window.location.reload();
+            throw new Error("Network response was not ok");
           }
           
             // grab data from response
