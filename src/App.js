@@ -3,7 +3,7 @@ import './App.css';
 import SearchBar from './components/searchbar/SearchBar';
 import Playlist from './components/playlist/Playlist';
 import Tracklist from './components/tracklist/Tracklist';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 
 function App() {
@@ -77,11 +77,17 @@ function App() {
     }
   }
 
+  // Define the currentUser function using useCallback
+    const fetchCurrentUser  = useCallback(async () => {
+      // Your code to fetch user data here
+    }, []); // Empty dependency array since currentUser doesn't depend on any props or state
+
+
   // update the user state
     useEffect(() => {
       const fetchUserData = async () => {
         try {
-          const userData = await currentUser();
+          const userData = await fetchCurrentUser ();
           setUser(userData);
         } catch (error) {
           // Handle any errors if necessary
@@ -92,7 +98,7 @@ function App() {
       if (token) {
         fetchUserData();
       }
-    }, [token]);
+    }, [token, fetchCurrentUser]);
   
  
   // Function to create a playlist (assuming you have the user's ID)
