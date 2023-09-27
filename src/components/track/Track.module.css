@@ -58,7 +58,7 @@
     
     .btns {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       margin-bottom: 15px;
     }
@@ -67,4 +67,13 @@
         width: 44px;
         margin-top: 5px;
     }
+
+    .track button { 
+        padding: 0 !important;
+    }
+
+    .info {
+        justify-content: center;
+    }
+
   }
