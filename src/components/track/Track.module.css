@@ -49,3 +49,22 @@
 .btns {
     min-width: 140px;
 }
+
+@media only screen and (max-width: 480px) {
+    .track {
+        margin: 24px 5%;;
+        flex-direction: column;
+    }
+    
+    .btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .btns button {
+        width: 44px;
+        margin-top: 5px;
+    }
+  }
